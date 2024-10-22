@@ -27,13 +27,7 @@ class DevController extends Controller
     {
         try {
             // 验证 SQL 语句并定义自定义错误消息
-            $validated = $request->validate([
-                'sql' => ['required', 'string', 'regex:/^select/i'],
-            ], [
-                'sql.required' => 'SQL 语句不能为空。',
-                'sql.string' => 'SQL 语句必须是字符串类型。',
-                'sql.regex' => '只允许以 SELECT 开头的 SQL 语句。',
-            ]);
+            $validated = $this->validateSQL($request);
 
             $sql = $validated['sql'];
             // 对 SQL 语句进行转义
@@ -56,10 +50,20 @@ class DevController extends Controller
             ]);
         } catch (\Exception $e) {
             // 记录日志（错误情况）
-            $this->logSql($request->sql, $e->getMessage());
-
+            !empty($request->sql)??$this->logSql($this->escapeString($request->sql), $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 400);
         }
+    }
+
+    private function validateSQL(Request $request): array
+    {
+        return $request->validate([
+            'sql' => ['required', 'string', 'regex:/^select/i'],
+        ], [
+            'sql.required' => 'SQL is empty.',
+            'sql.string' => 'SQL must be of string.。',
+            'sql.regex' => 'Only SELECT is allowed',
+        ]);
     }
 
     // 转义 SQL 字符串
@@ -93,13 +97,7 @@ class DevController extends Controller
     {
         try {
             // 验证 SQL 语句并定义自定义错误消息
-            $validated = $request->validate([
-                'sql' => ['required', 'string', 'regex:/^select/i'],
-            ], [
-                'sql.required' => 'SQL 语句不能为空。',
-                'sql.string' => 'SQL 语句必须是字符串类型。',
-                'sql.regex' => '只允许以 SELECT 开头的 SQL 语句。',
-            ]);
+            $validated = $this->validateSQL($request);
 
             $sql = $validated['sql'];
 
@@ -122,7 +120,7 @@ class DevController extends Controller
                     ->header('Content-Disposition', 'attachment; filename="' . $fileName . '"');
             }
 
-            return response()->json(['error' => '不支持导出格式'], 400);
+            return response()->json(['error' => 'Export format not supported.'], 400);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }

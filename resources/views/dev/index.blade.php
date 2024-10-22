@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQL 执行页面</title>
+    <title>SQL Execution Page</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -13,15 +13,15 @@
 <nav class="bg-white shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
-            <h1 class="text-xl font-semibold text-indigo-600">SQL 执行工具</h1>
+            <h1 class="text-xl font-semibold text-indigo-600">SQL Execution tools</h1>
             <div class="flex items-center space-x-6">
                 <p class="text-gray-700">
-                    用户：<strong>{{ $user->nickname }}</strong> |
-                    权限组：<strong>{{ $user->role }}</strong>
+                    Nickname：<strong>{{ $user->nickname }}</strong> |
+                    Permission Group：<strong>{{ $user->role }}</strong>
                 </p>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit" class="text-red-500">退出</button>
+                    <button type="submit" class="text-red-500">sign out</button>
                 </form>
             </div>
         </div>
@@ -37,13 +37,13 @@
             name="sql"
             rows="5"
             class="w-full border rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="输入 SELECT 语句 例：SELECT * FROM `myayd`.`sql_logs` LIMIT 0,1000;"></textarea>
+            placeholder="example：SELECT * FROM `myayd`.`sql_logs` LIMIT 0,1000;"></textarea>
 
         <div class="mt-4 flex justify-between">
-            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">执行</button>
+            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Excute</button>
             <div>
-                <a href="#" id="export-excel" class="text-indigo-500 mr-4">导出 Excel</a>
-                <a href="#" id="export-json" class="text-indigo-500">导出 JSON</a>
+                <a href="#" id="export-excel" class="text-indigo-500 mr-4">Export Excel</a>
+                <a href="#" id="export-json" class="text-indigo-500">Export Json</a>
             </div>
         </div>
     </form>

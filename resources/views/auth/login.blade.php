@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>用户登录</title>
+    <title>User login</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="h-screen bg-gray-50 flex items-center justify-center">
 
 <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
-    <h2 class="text-2xl font-bold text-center text-gray-700">用户登录</h2>
-    <p class="mt-2 text-sm text-center text-gray-600">请输入账号与密码</p>
+    <h2 class="text-2xl font-bold text-center text-gray-700">User login</h2>
+    <p class="mt-2 text-sm text-center text-gray-600">Please enter your account and password.</p>
 
     <form id="login-form" class="mt-6">
         @csrf
         <div class="mb-4">
-            <label for="account" class="block text-sm font-medium text-gray-700">账号</label>
+            <label for="account" class="block text-sm font-medium text-gray-700">account</label>
             <input
                 type="text"
                 id="account"
@@ -28,7 +28,7 @@
         </div>
 
         <div class="mb-4">
-            <label for="password" class="block text-sm font-medium text-gray-700">密码</label>
+            <label for="password" class="block text-sm font-medium text-gray-700">password</label>
             <input
                 type="password"
                 id="password"
@@ -42,22 +42,22 @@
         <div class="flex items-center justify-between mb-4">
             <label class="flex items-center">
                 <input type="checkbox" name="remember" class="h-4 w-4 text-indigo-600 border-gray-300 rounded" />
-                <span class="ml-2 text-sm text-gray-600">记住我</span>
+                <span class="ml-2 text-sm text-gray-600">Remember me</span>
             </label>
-            <a href="#" class="text-sm text-indigo-600 hover:text-indigo-500">忘记密码？</a>
+            <a href="#" class="text-sm text-indigo-600 hover:text-indigo-500">Forgot Password？</a>
         </div>
 
         <button
             type="submit"
             class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300"
         >
-            登录
+            Sign in
         </button>
     </form>
 
-    <p class="mt-4 text-sm text-center text-gray-600">
-        还没有账号？<a href="#" class="text-indigo-600 hover:text-indigo-500">注册</a>
-    </p>
+{{--    <p class="mt-4 text-sm text-center text-gray-600">--}}
+{{--        还没有账号？<a href="#" class="text-indigo-600 hover:text-indigo-500">注册</a>--}}
+{{--    </p>--}}
 </div>
 
 <!-- Toast 弹窗 -->
@@ -102,10 +102,10 @@
             if (response.ok) {
                 window.location.href = '/dev';
             } else {
-                showToast(data.error || '登录失败，请重试。');
+                showToast(data.error || 'Login failed, please try again.');
             }
         } catch (error) {
-            showToast('网络错误，请稍后再试。');
+            showToast('Network error, please try again later...');
         }
     }
 
