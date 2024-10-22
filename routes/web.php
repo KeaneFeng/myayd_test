@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DevController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +17,13 @@ use App\Http\Controllers\Auth\LoginController;
 
 Route::prefix('/')->group(function () {
     Route::view('','welcome');
-    Route::get('login', [LoginController::class, 'showLoginPage'])->name('login');
-    Route::post('login', [LoginController::class, 'login']);
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('login', [AuthController::class, 'showLoginPage'])->name('login');
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-//Route::get('/', function () {
-//    Route::view('welcome');
-//    Route::get('login', [LoginController::class, 'showLoginPage'])->name('login');
-//    Route::post('login', [LoginController::class, 'login']);
-//    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-//});
+Route::middleware(['auth', 'permission'])->group(function () {
+    Route::get('/dev', [DevController::class, 'index'])->name('dev.index');
+    Route::post('/dev/execute', [DevController::class, 'executeSQL'])->name('dev.execute');
+    Route::get('/dev/export/{format}', [DevController::class, 'export'])->name('dev.export');
+});
